@@ -50,6 +50,26 @@ public class ProductRepository {
         }
     }
 
+    public boolean updateProductSection(int oldSectionId, int newSectionId) {
+        Connection connection = null;
+        ResultSet resultSet = null;
+        Statement statement = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.createStatement();
+
+            final String sql = "UPDATE Product SET sectionId = " + newSectionId + " WHERE sectionId = " + oldSectionId;
+            int updatedRecords = statement.executeUpdate(sql);
+            System.out.println("There were " + updatedRecords + " products moved from section " + oldSectionId + " to section " + newSectionId);
+            return updatedRecords > 0;
+        } catch (final SQLException ex) {
+            throw new IllegalArgumentException(ex.getMessage());
+        } finally {
+            closeResources(connection, resultSet, statement);
+        }
+    }
+
     public Product getProduct(final int id) {
         Connection connection = null;
         ResultSet resultSet = null;
