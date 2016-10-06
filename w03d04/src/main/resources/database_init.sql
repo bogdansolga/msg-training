@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Section;
 DROP TABLE IF EXISTS Store;
 DROP TABLE IF EXISTS StoreType;
+DROP PROCEDURE IF EXISTS getProductsCount;
 
 CREATE TABLE StoreType (
   id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -39,6 +40,11 @@ CREATE TABLE Product (
 
   FOREIGN KEY fk_store(sectionId) REFERENCES Section(id) ON DELETE CASCADE
 );
+
+CREATE PROCEDURE getProductsCount (OUT count INT)
+  BEGIN
+    SELECT COUNT(*) INTO count FROM Product;
+  END;
 
 INSERT INTO StoreType (id, name) VALUES (1, 'Electronics');
 INSERT INTO StoreType (id, name) VALUES (2,     'Clothes');
