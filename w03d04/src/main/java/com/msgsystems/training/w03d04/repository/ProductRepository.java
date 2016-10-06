@@ -2,36 +2,32 @@ package com.msgsystems.training.w03d04.repository;
 
 import com.msgsystems.training.w03d04.model.Product;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class ProductRepository {
 
-    private static final String DB_URL = "jdbc:mysql://localhost/msg_training";
-    private static final String USER = "root";
-    private static final String PASS = "mysql";
+    private static final String DB_PROPERTIES_FILE = "database-connection.properties";
+    private static String DB_URL;
+    private static String DB_USER;
+    private static String DB_PASS;
 
-    private static final boolean INITIALIZE = false;
+    static {
+        final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+        try (final InputStream inputStream = contextClassLoader.getResourceAsStream(DB_PROPERTIES_FILE)) {
+            final Properties properties = new Properties();
+            properties.load(inputStream);
 
-    public ProductRepository() {
-        if (!INITIALIZE) return;
-
-        Connection connection = null;
-        try {
-            connection = getConnection();
-
-            connection.prepareCall("DROP TABLE IF EXISTS Product").execute();
-            connection.prepareCall("CREATE TABLE Product(id INTEGER NOT NULL, name CHAR(30), PRIMARY KEY (id))").execute();
-
-            connection.prepareCall("INSERT INTO Product (id, name) VALUES (1, 'Dell XPS')").execute();
-            connection.prepareCall("INSERT INTO Product (id, name) VALUES (2, 'Asus UX530')").execute();
-        } catch (final Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeResources(connection, null, null);
+            DB_URL = properties.getProperty("database.url");
+            DB_USER = properties.getProperty("database.user");
+            DB_PASS = properties.getProperty("database.pass");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -78,7 +74,7 @@ public class ProductRepository {
 
     private Connection getConnection() {
         try {
-            return DriverManager.getConnection(DB_URL, USER, PASS);
+            return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
         } catch (final SQLException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
