@@ -45,8 +45,9 @@ public class ProductRepository {
         try (final InputStream inputStream = loadFile(fileName)) {
             connection = getConnection();
 
-            preparedStatement = connection.prepareStatement("INSERT INTO ProductData (id, image) VALUES (id, ?)");
-            preparedStatement.setBinaryStream(1, inputStream);
+            preparedStatement = connection.prepareStatement("INSERT INTO ProductData (id, image) VALUES (?, ?)");
+            preparedStatement.setInt(1, id);
+            preparedStatement.setBinaryStream(2, inputStream);
             preparedStatement.executeUpdate();
         } catch (final Exception ex) {
             throw new IllegalArgumentException(ex.getMessage());
@@ -66,8 +67,9 @@ public class ProductRepository {
         try {
             connection = getConnection();
 
-            preparedStatement = connection.prepareStatement("INSERT INTO ProductData (id, description) VALUES (id, ?)");
-            preparedStatement.setCharacterStream(1, new InputStreamReader(loadFile(fileName)));
+            preparedStatement = connection.prepareStatement("INSERT INTO ProductData (id, description) VALUES (?, ?)");
+            preparedStatement.setInt(1, id);
+            preparedStatement.setCharacterStream(2, new InputStreamReader(loadFile(fileName)));
             preparedStatement.executeUpdate();
         } catch (final Exception ex) {
             throw new IllegalArgumentException(ex.getMessage());
