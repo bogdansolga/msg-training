@@ -13,4 +13,13 @@ CREATE TABLE ProductDataSequence (
 ) AUTO_INCREMENT = 1;
 INSERT INTO ProductDataSequence VALUES (0);
 
+CREATE OR REPLACE VIEW MainStores AS
+  SELECT *
+  FROM Store s
+  WHERE
+    s.parentStoreId IS NULL
+  AND
+    s.name IS NOT NULL
+  ;
+
 COMMIT;
