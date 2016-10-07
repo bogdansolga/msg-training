@@ -64,12 +64,12 @@ public class ProductRepository {
 
         final int id = getNextProductDataSequenceId();
 
-        try {
+        try (final InputStreamReader reader = new InputStreamReader(loadFile(fileName))) {
             connection = getConnection();
 
             preparedStatement = connection.prepareStatement("INSERT INTO ProductData (id, description) VALUES (?, ?)");
             preparedStatement.setInt(1, id);
-            preparedStatement.setCharacterStream(2, new InputStreamReader(loadFile(fileName)));
+            preparedStatement.setCharacterStream(2, reader);
             preparedStatement.executeUpdate();
         } catch (final Exception ex) {
             throw new IllegalArgumentException(ex.getMessage());
