@@ -38,7 +38,7 @@ CREATE TABLE Product (
   name VARCHAR(50) NOT NULL,
   sectionId INTEGER NOT NULL,
 
-  FOREIGN KEY fk_store(sectionId) REFERENCES Section(id) ON DELETE CASCADE
+  FOREIGN KEY fk_section(sectionId) REFERENCES Section(id) ON DELETE CASCADE
 );
 
 CREATE PROCEDURE getProductsCount (OUT count INT)
