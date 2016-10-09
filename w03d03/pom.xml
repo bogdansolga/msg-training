@@ -8,7 +8,7 @@
 
     <parent>
         <groupId>com.msgsystems</groupId>
-        <artifactId>spring.training</artifactId>
+        <artifactId>java.training</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
