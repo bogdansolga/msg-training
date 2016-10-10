@@ -30,7 +30,7 @@
             <property name="javax.persistence.jdbc.driver"   value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url"      value="jdbc:mysql://localhost/msg_training?useSSL=false&amp;serverTimezone=EST"/>
             <property name="javax.persistence.jdbc.user"     value="root"/>
-            <property name="javax.persistence.jdbc.password" value="mysql" />
+            <property name="javax.persistence.jdbc.password" value="mysql"/>
 
             <!-- Hibernate properties -->
             <property name="hibernate.dialect"      value="org.hibernate.dialect.MySQL57InnoDBDialect"/>
