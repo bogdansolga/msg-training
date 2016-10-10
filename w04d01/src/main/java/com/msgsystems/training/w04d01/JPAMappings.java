@@ -1,5 +1,6 @@
 package com.msgsystems.training.w04d01;
 
+import com.msgsystems.training.w04d01.controller.ProductController;
 import com.msgsystems.training.w04d01.data.repository.ProductRepository;
 import com.msgsystems.training.w04d01.service.ProductService;
 
@@ -17,6 +18,7 @@ public class JPAMappings {
 
     private static ProductRepository productRepository;
     private static ProductService productService;
+    private static ProductController productController;
 
     static {
         // disable Hibernate's logging messages
@@ -29,8 +31,10 @@ public class JPAMappings {
     public static void main(final String[] args) {
         productRepository = new ProductRepository(entityManager);
         productService = new ProductService(productRepository);
+        productController = new ProductController(productService);
 
-        System.out.println("The connection was properly established");
+        String product = productController.readProduct(3);
+        System.out.println(product);
 
         closeEntityManagerObjects();
     }
