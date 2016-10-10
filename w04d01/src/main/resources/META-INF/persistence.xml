@@ -10,7 +10,23 @@
         <class>com.msgsystems.training.w04d01.data.model.Product</class>
 
         <properties>
-            <!-- JPA properties -->
+            <!-- database properties -->
+            <property name="javax.persistence.database-product-name"    value="MySQL"/>
+            <property name="javax.persistence.database-major-version"   value="5.7"/>
+            <property name="javax.persistence.database-minor-version"   value="15"/>
+
+            <!-- DDL related config properties - http://wiki.eclipse.org/EclipseLink/Release/2.5/JPA21#DDL_generation -->
+            <property name="javax.persistence.schema-generation.database.action"        value="none"/> <!-- none, create, drop-and-create, drop -->
+            <!--
+            <property name="javax.persistence.schema-generation.create-source "         value="script"/>
+            <property name="javax.persistence.schema-generation.drop-source "           value="script"/>
+            <property name="javax.persistence.schema-generation.scripts.action"         value="none"/>
+            <property name="javax.persistence.schema-generation.scripts.create-target"  value="w04d01/src/main/resources/scripts/create-database.sql"/>
+            <property name="javax.persistence.schema-generation.scripts.drop-target"    value="w04d01/src/main/resources/scripts/drop-database.sql"/>
+            <property name="javax.persistence.sql-load-script-source"                   value="w04d01/src/main/resources/scripts/insert.sql"/>
+            -->
+
+            <!-- JDBC connection details -->
             <property name="javax.persistence.jdbc.driver"   value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url"      value="jdbc:mysql://localhost/msg_training?useSSL=false&amp;serverTimezone=EST"/>
             <property name="javax.persistence.jdbc.user"     value="root"/>
