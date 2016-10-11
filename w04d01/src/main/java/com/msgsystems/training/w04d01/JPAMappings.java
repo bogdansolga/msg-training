@@ -13,11 +13,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "unchecked"})
 public class JPAMappings {
 
     private static EntityManagerFactory entityManagerFactory;
@@ -56,18 +59,9 @@ public class JPAMappings {
 
         //storeSection.getProducts().forEach(product -> System.out.println(product.getName()));
 
-        final EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+        //saveSectionAndProducts();
 
-        StoreSection storeSection = new StoreSection();
-
-        final Store store = entityManager.find(Store.class, 2);
-        storeSection.setStore(store);
-        storeSection.setSectionName("Electronice");
-
-        entityManager.persist(storeSection);
-
-        transaction.commit();
+        getProductsFromStore();
 
         /*
         try {
@@ -88,6 +82,44 @@ public class JPAMappings {
         closeEntityManagerObjects();
 
         System.out.println(System.currentTimeMillis() - now + " ms");
+    }
+
+    private static void getProductsFromStore() {
+        final Query query = entityManager.createNamedQuery("Product.bySection");
+        query.setParameter("storeId", 3);
+
+        final List<Product> products = (List<Product>) query.getResultList();
+        products.forEach(product -> System.out.println(product.getId() + ", " + product.getName()));
+    }
+
+    private static void saveSectionAndProducts() {
+        final EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        StoreSection storeSection = new StoreSection();
+
+        final Store store = entityManager.find(Store.class, 3);
+        storeSection.setStore(store);
+        storeSection.setSectionName("Baeutura :)");
+
+        Product product = new Product();
+        product.setStoreSection(storeSection);
+        product.setName("Whiskey");
+
+        Product carte = new Product();
+        carte.setName("Beer");
+        carte.setStoreSection(storeSection);
+
+        Set<Product> products = new HashSet<>(2);
+        products.add(product);
+        products.add(carte);
+        storeSection.setProducts(products);
+
+        store.getStoreSections().add(storeSection);
+
+        entityManager.persist(storeSection);
+
+        transaction.commit();
     }
 
     private static void readProduct(final int id) {
