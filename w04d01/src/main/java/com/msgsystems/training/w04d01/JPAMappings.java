@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
 
 @SuppressWarnings({"unused", "unchecked"})
 public class JPAMappings {
@@ -31,7 +32,7 @@ public class JPAMappings {
 
     static {
         // disable Hibernate's logging messages
-        //java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
+        java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
 
         entityManagerFactory = Persistence.createEntityManagerFactory("msg_training");
         entityManager = entityManagerFactory.createEntityManager();
@@ -62,19 +63,9 @@ public class JPAMappings {
 
         //getProductsFromStore();
 
-        final EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+        mergingAParentEntityWithARemovedChild();
 
-        StoreSection storeSection = entityManager.find(StoreSection.class, 1);
-        final Set<Product> products = storeSection.getProducts();
-
-        System.out.println("Before - " + products.size());
-        products.removeIf(product -> product.getName().contains("Altceva"));
-        System.out.println("After - " + products.size());
-
-        entityManager.merge(storeSection);
-
-        transaction.commit();
+        //removingAParentEntity();
 
         /*
         try {
@@ -95,6 +86,28 @@ public class JPAMappings {
         closeEntityManagerObjects();
 
         System.out.println(System.currentTimeMillis() - now + " ms");
+    }
+
+    private static void mergingAParentEntityWithARemovedChild() {
+        final EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        StoreSection storeSection = entityManager.find(StoreSection.class, 2);
+        final Set<Product> products = storeSection.getProducts();
+        products.removeIf(product -> product.getName().contains("Dell"));
+
+        entityManager.merge(storeSection);
+
+        transaction.commit();
+    }
+
+    private static void removingAParentEntity() {
+        final EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.remove(entityManager.find(StoreSection.class, 1));
+
+        transaction.commit();
     }
 
     private static void getProductsFromStore() {
