@@ -2,7 +2,8 @@ package com.msgsystems.training.w04d01.service;
 
 import com.msgsystems.training.w04d01.data.model.Product;
 import com.msgsystems.training.w04d01.data.repository.ProductRepository;
-import com.msgsystems.training.w04d01.service.exceptions.ProductNotFoundException;
+
+import javax.persistence.EntityNotFoundException;
 
 @SuppressWarnings("unused")
 public class ProductService {
@@ -30,13 +31,13 @@ public class ProductService {
 
         /* if (Java8)
         return Optional.ofNullable(byId)
-                       .orElseThrow(() -> new ProductNotFoundException("No product with the id " + id));
+                       .orElseThrow(() -> new EntityNotFoundException("No product with the id " + id));
         */
 
         if (byId != null) {
             return byId;
         } else {
-            throw new ProductNotFoundException("There is no product with the id " + id);
+            throw new EntityNotFoundException("There is no product with the id " + id);
         }
     }
 
