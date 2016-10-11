@@ -23,9 +23,11 @@ public class Store implements Serializable {
     @JoinTable(
             name = "StoreManager",
             joinColumns = {
+                // navigating from the 'StoreManager' to the 'Store'
                 @JoinColumn(name = "store_id", referencedColumnName = "id")
             },
             inverseJoinColumns = {
+                    // navigating from the 'StoreManager' to the 'Manager'
                 @JoinColumn(name = "manager_id", referencedColumnName = "id")
             }
     )
