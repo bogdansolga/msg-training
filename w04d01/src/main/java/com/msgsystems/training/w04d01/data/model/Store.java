@@ -1,5 +1,6 @@
 package com.msgsystems.training.w04d01.data.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +25,7 @@ public class Store implements Serializable {
     @Column(nullable = false, length = 50, insertable = true)
     private String name;
 
-    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<StoreSection> storeSections;
 
     @ManyToMany(fetch = FetchType.LAZY)
