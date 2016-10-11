@@ -72,11 +72,12 @@ public class StoreSection implements Serializable {
         if (this == o) return true;
         if (!(o instanceof StoreSection)) return false;
         StoreSection that = (StoreSection) o;
-        return id == that.id;
+        return id == that.id &&
+                Objects.equals(sectionName, that.sectionName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, sectionName);
     }
 }
