@@ -2,6 +2,7 @@ package com.msgsystems.training.w04d01.data.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class Product implements Serializable {
     @Column(name = "name", unique = true, nullable = false, insertable = true, updatable = false, length = 50)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = StoreSection.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "sectionId")
     private StoreSection storeSection;
 

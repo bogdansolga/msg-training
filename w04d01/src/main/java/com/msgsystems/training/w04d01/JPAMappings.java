@@ -11,6 +11,7 @@ import com.msgsystems.training.w04d01.service.ProductService;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.Optional;
 import java.util.Set;
@@ -35,6 +36,8 @@ public class JPAMappings {
     }
 
     public static void main(final String[] args) {
+        long now = System.currentTimeMillis();
+
         productRepository = new ProductRepository(entityManager);
         productService = new ProductService(productRepository);
         productController = new ProductController(productService);
@@ -44,6 +47,29 @@ public class JPAMappings {
         // saving a new Product, using the IDENTITY PK generation
         // saveNewProduct();
 
+        //StoreSection storeSection = entityManager.find(StoreSection.class, 1);
+        //System.out.println(storeSection.getId());
+        //storeSection.getProducts().forEach(product -> System.out.println(product.getName()));
+
+        //Product product = entityManager.find(Product.class, 1);
+        //System.out.println(product.getName());
+
+        //storeSection.getProducts().forEach(product -> System.out.println(product.getName()));
+
+        final EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        StoreSection storeSection = new StoreSection();
+
+        final Store store = entityManager.find(Store.class, 2);
+        storeSection.setStore(store);
+        storeSection.setSectionName("Electronice");
+
+        entityManager.persist(storeSection);
+
+        transaction.commit();
+
+        /*
         try {
             displayStoresManagedByManager(2);
         } catch (final Exception e) {
@@ -57,8 +83,11 @@ public class JPAMappings {
         } catch (final Exception e) {
             System.err.println(e.getMessage());
         }
+        */
 
         closeEntityManagerObjects();
+
+        System.out.println(System.currentTimeMillis() - now + " ms");
     }
 
     private static void readProduct(final int id) {
