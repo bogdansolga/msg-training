@@ -10,6 +10,7 @@
         <class>com.msgsystems.training.w04d01.data.model.Manager</class>
         <class>com.msgsystems.training.w04d01.data.model.Product</class>
         <class>com.msgsystems.training.w04d01.data.model.Store</class>
+        <class>com.msgsystems.training.w04d01.data.model.StoreSection</class>
         <class>com.msgsystems.training.w04d01.data.model.StoreManager</class>
 
         <properties>
@@ -38,7 +39,7 @@
             <!-- Hibernate properties -->
             <property name="hibernate.dialect"      value="org.hibernate.dialect.MySQL57InnoDBDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="none"/>
-            <property name="hibernate.show_sql"     value="false"/> <!-- to be set to true for displaying the SQL queries -->
+            <property name="hibernate.show_sql"     value="true"/> <!-- to be set to true for displaying the SQL queries -->
             <property name="hibernate.format_sql"   value="true"/>
         </properties>
     </persistence-unit>
