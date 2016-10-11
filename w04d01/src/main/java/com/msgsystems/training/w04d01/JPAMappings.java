@@ -39,8 +39,6 @@ public class JPAMappings {
     }
 
     public static void main(final String[] args) {
-        long now = System.currentTimeMillis();
-
         productRepository = new ProductRepository(entityManager);
         productService = new ProductService(productRepository);
         productController = new ProductController(productService);
@@ -84,8 +82,6 @@ public class JPAMappings {
         */
 
         closeEntityManagerObjects();
-
-        System.out.println(System.currentTimeMillis() - now + " ms");
     }
 
     private static void mergingAParentEntityWithARemovedChild() {
