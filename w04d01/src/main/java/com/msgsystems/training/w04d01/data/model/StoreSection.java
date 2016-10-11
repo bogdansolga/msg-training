@@ -31,6 +31,7 @@ public class StoreSection implements Serializable {
     @JoinColumn(name = "storeId")
     private Store store;
 
+    // 'mappedby' tells the persistence provider that the join column is in the Product table
     @OneToMany(mappedBy = "storeSection", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy(value = "name")
     private Set<Product> products;
