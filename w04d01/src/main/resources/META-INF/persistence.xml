@@ -7,7 +7,10 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- the list of managed entities -->
+        <class>com.msgsystems.training.w04d01.data.model.Manager</class>
         <class>com.msgsystems.training.w04d01.data.model.Product</class>
+        <class>com.msgsystems.training.w04d01.data.model.Store</class>
+        <class>com.msgsystems.training.w04d01.data.model.StoreManager</class>
 
         <properties>
             <!-- database properties -->
