@@ -1,16 +1,21 @@
 START TRANSACTION;
 
+DROP TABLE IF EXISTS StoreManager;
+DROP TABLE IF EXISTS Manager;
+
 CREATE TABLE Manager (
   id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE StoreManager (
-  store_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  store_id INTEGER NOT NULL,
   manager_id INTEGER NOT NULL,
 
-  FOREIGN KEY fk_section(store_id) REFERENCES Store(id) ON DELETE CASCADE,
-  FOREIGN KEY fk_section(manager_id) REFERENCES Manager(id) ON DELETE CASCADE
+  PRIMARY KEY (store_id, manager_id),
+
+  FOREIGN KEY fk_store(store_id) REFERENCES Store(id) ON DELETE CASCADE,
+  FOREIGN KEY fk_manager(manager_id) REFERENCES Manager(id) ON DELETE CASCADE
 );
 
 INSERT INTO Manager (id, name) VALUES (2, 'John');
