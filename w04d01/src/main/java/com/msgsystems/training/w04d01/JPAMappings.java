@@ -7,6 +7,7 @@ import com.msgsystems.training.w04d01.data.model.Store;
 import com.msgsystems.training.w04d01.data.model.StoreSection;
 import com.msgsystems.training.w04d01.data.repository.ProductRepository;
 import com.msgsystems.training.w04d01.service.ProductService;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -61,9 +62,13 @@ public class JPAMappings {
 
         //getProductsFromStore();
 
-        mergingAParentEntityWithARemovedChild();
+        //mergingAParentEntityWithARemovedChild();
 
         //removingAParentEntity();
+
+        //insertManyProducts();
+
+        paginateProducts();
 
         /*
         try {
@@ -84,11 +89,55 @@ public class JPAMappings {
         closeEntityManagerObjects();
     }
 
-    private static void mergingAParentEntityWithARemovedChild() {
+    private static void paginateProducts() {
+        Query paginationQuery = entityManager.createQuery("SELECT product FROM Product product") // WHERE storeSection.id = 2
+                                             .setFirstResult(50)
+                                             .setMaxResults(50);
+
+        List<Product> products = (List<Product>) paginationQuery.getResultList();
+        products.forEach(System.out::println);
+    }
+
+    private static void insertManyProducts() {
         final EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
         StoreSection storeSection = entityManager.find(StoreSection.class, 2);
+        final Set<Product> products = storeSection.getProducts();
+
+        /*
+        Stream<Product> productStream = Stream.generate(() ->
+                createProduct(storeSection, RandomStringUtils.randomAlphanumeric(5)));
+        products.addAll(productStream.collect(Collectors.toList()));
+        */
+
+        final int numberOfProducts = 500;
+        for (int i = 0; i < numberOfProducts; i++) {
+            Product product = new Product();
+            product.setStoreSection(storeSection);
+            product.setName("The product " + RandomStringUtils.randomAlphanumeric(5).toLowerCase());
+
+            products.add(product);
+        }
+
+        entityManager.merge(storeSection);
+
+        transaction.commit();
+    }
+
+    private static Product createProduct(StoreSection storeSection, String randomAlphanumeric) {
+        Product product = new Product();
+        product.setStoreSection(storeSection);
+        product.setName("The product " + randomAlphanumeric);
+
+        return product;
+    }
+
+    private static void mergingAParentEntityWithARemovedChild() {
+        final EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        StoreSection storeSection = entityManager.find(StoreSection.class, 4);
         final Set<Product> products = storeSection.getProducts();
         products.removeIf(product -> product.getName().contains("Dell"));
 
