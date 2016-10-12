@@ -2,12 +2,12 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %highlight{%-5level} %logger{20} - %msg%n"/>
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%t] %highlight{%-5level} %logger{1.}.(%M, %L) - %msg%n"/>
         </Console>
     </Appenders>
 
     <Loggers>
-        <Logger name="com.msgsystems.training.w04d03" level="DEBUG"/>
+        <Logger name="com.msgsystems.training.w04d03" level="WARN"/>
 
         <Root level="error">
             <AppenderRef ref="Console"/>
