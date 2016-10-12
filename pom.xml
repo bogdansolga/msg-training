@@ -32,6 +32,7 @@
         <module>w03d04</module>
         <module>w03d05</module>
         <module>w04d01</module>
+        <module>w04d03</module>
     </modules>
 
     <properties>
@@ -44,6 +45,7 @@
 
         <logback.version>1.1.7</logback.version>
         <logback.spring-ext.version>0.1.4</logback.spring-ext.version>
+        <log4j2.version>2.7</log4j2.version>
 
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
         <mysql-driver.version>6.0.4</mysql-driver.version>
@@ -77,6 +79,18 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-driver.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
             </dependency>
 
             <dependency>
