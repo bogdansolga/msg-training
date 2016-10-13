@@ -7,7 +7,6 @@ import com.msgsystems.training.w04d01.data.model.Store;
 import com.msgsystems.training.w04d01.data.model.StoreSection;
 import com.msgsystems.training.w04d01.data.repository.ProductRepository;
 import com.msgsystems.training.w04d01.service.ProductService;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,6 +17,7 @@ import javax.persistence.Query;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -115,7 +115,7 @@ public class JPAMappings {
         for (int i = 0; i < numberOfProducts; i++) {
             Product product = new Product();
             product.setStoreSection(storeSection);
-            product.setName("The product " + RandomStringUtils.randomAlphanumeric(5).toLowerCase());
+            product.setName("The product " + new Random(50).toString());
 
             products.add(product);
         }
