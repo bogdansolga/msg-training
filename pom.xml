@@ -33,21 +33,23 @@
         <module>w03d05</module>
         <module>w04d01</module>
         <module>w04d03</module>
+        <module>w04d04</module>
     </modules>
 
     <properties>
         <hibernate.version>5.2.2.Final</hibernate.version>
 
         <jackson.version>2.8.3</jackson.version>
-
         <java.version>1.8</java.version>
         <javax.persistence.api.version>1.0.0.Final</javax.persistence.api.version>
+        <junit.version>4.12</junit.version>
 
         <logback.version>1.1.7</logback.version>
         <logback.spring-ext.version>0.1.4</logback.spring-ext.version>
         <log4j2.version>2.7</log4j2.version>
 
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
+        <mockito.version>1.10.19</mockito.version>
         <mysql-driver.version>6.0.4</mysql-driver.version>
 
         <slf4j.version>1.7.21</slf4j.version>
@@ -73,6 +75,12 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
             </dependency>
 
             <dependency>
@@ -105,11 +113,18 @@
                 <version>${javax.persistence.api.version}</version>
             </dependency>
 
+
             <!-- Logging -->
             <dependency>
                 <groupId>org.logback-extensions</groupId>
                 <artifactId>logback-ext-spring</artifactId>
                 <version>${logback.spring-ext.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
             </dependency>
 
             <dependency>
